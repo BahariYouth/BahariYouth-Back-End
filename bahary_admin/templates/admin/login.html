@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل الدخول | شباب بحري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-blue:rgba(0, 28, 154, 0.83);
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --input-border: #ccc;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--light-gray);
+        }
+
+        .login-container {
+            display: flex;
+            height: 100vh;
+            flex-direction: row-reverse; /* RTL layout */
+        }
+
+        .login-left {
+            flex: 1;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            border-left: 1px solid #ddd;
+        }
+
+        .login-left img {
+            max-height: 120px;
+            margin-bottom: 1rem;
+        }
+
+        .login-left h1 {
+            font-size: 28px;
+            color: var(--main-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-left p {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+        }
+
+        .login-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--main-blue);
+            color: var(--white);
+        }
+
+        .login-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(23, 11, 128, 0.8);
+            width: 100%;
+            max-width: 400px;
+            color: black;
+        }
+
+        .login-form h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--main-blue);
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .login-form button {
+            background-color: var(--main-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: #004957;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            .login-left,
+            .login-right {
+                flex: none;
+                width: 100%;
+                height: auto;
+                border: none;
+            }
+            .login-right {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Right: Login form -->
+        <div class="login-right">
+            <form method="post" class="login-form">
+                <h2>تسجيل الدخول</h2>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">دخول</button>
+            </form>
+        </div>
+
+        <!-- Left: Logo and branding -->
+        <div class="login-left">
+            <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شباب بحري">
+            <h1>شباب بحري</h1>
+            <p>مرحبًا بك في لوحة تحكم الإدارة</p>
+        </div>
+    </div>
+</body>
+</html>

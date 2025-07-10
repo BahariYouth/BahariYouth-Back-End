@@ -1,20 +1,24 @@
 from rest_framework import serializers
-from .models import Governorate,Department,Branch
+from .models import Governorate,CentralUnit
 
 class GovernorateSerializers(serializers.ModelSerializer):
+    latitude = serializers.FloatField(read_only=True)
+    longitude = serializers.FloatField(read_only=True)
     class Meta:
         model = Governorate
-        fields = '__all__'
+        fields = [
+            'name',
+            'location_link',
+            'latitude',
+            'longitude',
+        ]
 
 
-class DepartmentSerializers(serializers.ModelSerializer):
+class CentralUnitSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Department
-        fields = '__all__'
+        model = CentralUnit
+        fields = [
+            'name'
+        ]
 
-
-class BranchSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Branch
-        fields = '__all__'
         

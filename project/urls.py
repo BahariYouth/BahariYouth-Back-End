@@ -4,7 +4,12 @@ from django.urls import re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.conf import settings
+from django.conf.urls.static import static
+import os
 
+
+BASE_DIR = settings.BASE_DIR 
 schema_view = get_schema_view(
    openapi.Info(
       title="BahariYouth API",
@@ -21,8 +26,15 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+     path('_nested_admin/', include('nested_admin.urls')),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('api/',include('structure.urls'))
+    path('api/',include('structure.urls')),
+    path('api/',include('accounts.urls')),
+    path('api/',include('news.urls')),
+    path('api/',include('events.urls')),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(BASE_DIR, "bahary_admin", "static"))
+

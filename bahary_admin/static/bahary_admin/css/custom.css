@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+
+.login-logo img {
+    max-height: 100px !important;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
