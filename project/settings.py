@@ -1,19 +1,15 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv()
-
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = 'django-insecure-c183d(9%#1-#ixg*1ih=(i7tx6+bv)8$acjc!59l25cu-p1kic'
 
 DEBUG = False
 
-ALLOWED_HOSTS = [".vercel.app", ".now.sh"]
-
+ALLOWED_HOSTS = ["madfaa.pythonanywhere.com"]
 
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
@@ -27,18 +23,16 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg',
-    # 'leaflet',
-    'cloudinary', 
+    'cloudinary',
     'cloudinary_storage',
     'nested_admin',
- 
-    # my apps 
+
+    # my apps
     'accounts.apps.AccountsConfig',
     'structure',
     'bahary_admin',
     'events',
     'news',
-    
 ]
 
 REST_FRAMEWORK = {
@@ -79,7 +73,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
-if not DEBUG :
+if not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -90,15 +84,13 @@ if not DEBUG :
             'PORT': os.getenv('PORT_'),
         }
     }
-else :
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -115,9 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -126,18 +115,16 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # مهم للإنتاج
 
 STATICFILES_DIRS = [
     BASE_DIR / "bahary_admin" / "static",
 ]
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
-
 
 JAZZMIN_SETTINGS = {
     "site_title": "Bahary Youth Admin",
@@ -148,7 +135,7 @@ JAZZMIN_SETTINGS = {
     "site_logo": "bahary_admin/images/logo.jpg",
     "show_sidebar": True,
     "navigation_expanded": True,
-    "user_avatar": "image", 
+    "user_avatar": "image",
     "icons": {
         "accounts.User": "fas fa-user",
         "auth.Group": "fas fa-users-cog",
@@ -156,16 +143,15 @@ JAZZMIN_SETTINGS = {
         "structure.CentralUnit": "fas fa-building",
         "structure.Branch": "fas fa-code-branch",
         "authtoken.Token": "fas fa-key",
-        "news.News": "fas fa-newspaper",         
-        "news.NewsImage": "fas fa-image",         
+        "news.News": "fas fa-newspaper",
+        "news.NewsImage": "fas fa-image",
         "events.Event": "fas fa-calendar-alt",
         "admin.LogEntry": "fas fa-history"
     },
 }
 
-
 LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (26.8206, 30.8025),  
+    'DEFAULT_CENTER': (26.8206, 30.8025),
     'DEFAULT_ZOOM': 6,
     'MIN_ZOOM': 3,
     'MAX_ZOOM': 18,
@@ -177,7 +163,9 @@ LOGIN_REDIRECT_URL = '/admin/'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+# Debug print to verify env loading
 print("CLOUD_NAME = ", os.getenv('CLOUDINARY_CLOUD_NAME'))
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
