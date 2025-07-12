@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-c183d(9%#1-#ixg*1ih=(i7tx6+bv)8$acjc!59l25cu-p1kic
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["madfaa.pythonanywhere.com"]
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
