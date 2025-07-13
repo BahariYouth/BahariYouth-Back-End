@@ -20,8 +20,6 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     ROLE_CHOICES = [
-        ('board_head', 'رئيس المجلس'),
-        ('board_vice', 'نائب رئيس المجلس'),
         ('central_unit_head', 'رئيس وحدة مركزية'),
         ('central_unit_vice', 'نائب رئيس وحدة مركزية'),
         ('governorate_head', 'منسق محافظة'),

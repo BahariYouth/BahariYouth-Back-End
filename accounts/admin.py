@@ -56,8 +56,6 @@ class CustomUserAdmin(BaseUserAdmin):
                 'is_active',
                 'is_staff',
                 'is_superuser',
-                'groups',
-                'user_permissions'
             )
         }),
         ('تواريخ', {'fields': ('last_login',)}),

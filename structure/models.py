@@ -14,13 +14,17 @@ class Governorate(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='governorate_heads',
-        verbose_name="رئيس المحافظة"
+        verbose_name="رئيس المحافظة",
+        null=True,
+        blank=True,
     )
     vice = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='governorate_vices',
-        verbose_name="نائب الرئيس"
+        verbose_name="نائب الرئيس",
+        null=True,
+        blank=True,
     )
     location_link = models.URLField(
         blank=True,
@@ -73,6 +77,7 @@ class CentralUnit(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         related_name="central_head_of",
         verbose_name="رئيس الوحدة"
     )
@@ -80,6 +85,7 @@ class CentralUnit(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         related_name="central_deputy_of",
         verbose_name="نائب الرئيس"
     )

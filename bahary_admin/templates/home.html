@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>شباب بحري</title>
+    <link rel="icon" type="image/png" href="{% static 'bahary_admin/images/logo.jpg' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f4ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            max-width: 120px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            color: rgba(0, 28, 154, 0.83);
+            font-size: 32px;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: rgba(0, 28, 154, 0.83);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            text-decoration: none;
+            margin: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #021a90;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شعار شباب بحري" class="logo">
+        <h1>شباب بحري</h1>
+        <p>منصة إلكترونية تهدف إلى تنظيم ومتابعة الأنشطة الشبابية في إطار وزارة الشباب والرياضة.</p>
+        <a href="/admin" class="btn">تسجيل الدخول</a>
+        <a href="https://www.facebook.com/baharyyouth" target="_blank" class="btn">تابعنا على فيسبوك</a>
+    </div>
+</body>
+</html>

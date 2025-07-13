@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-SECRET_KEY = 'django-insecure-c183d(9%#1-#ixg*1ih=(i7tx6+bv)8$acjc!59l25cu-p1kic'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = False
 
@@ -163,8 +163,7 @@ LOGIN_REDIRECT_URL = '/admin/'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# Debug print to verify env loading
-print("CLOUD_NAME = ", os.getenv('CLOUDINARY_CLOUD_NAME'))
+
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),

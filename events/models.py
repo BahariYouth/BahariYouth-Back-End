@@ -12,7 +12,6 @@ class Event(models.Model):
         verbose_name="الوصف"
     )
     date = models.DateTimeField(
-        auto_now=True,
         verbose_name="تاريخ الفعالية"
     )
     image = CloudinaryField(
