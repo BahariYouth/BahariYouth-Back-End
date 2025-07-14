@@ -9,6 +9,41 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = False
 
+
+import os
+import logging.config
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'formatters': {
+        'verbose': {
+            'format': '[{asctime}] {levelname} {name} {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG' if DEBUG else 'WARNING',
+    },
+
+    'django': {
+        'handlers': ['console'],
+        'level': 'DEBUG' if DEBUG else 'WARNING',
+        'propagate': True,
+    },
+}
+
+
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
