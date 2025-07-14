@@ -3,81 +3,586 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>شباب بحري</title>
-    <link rel="icon" type="image/png" href="{% static 'bahary_admin/images/logo.jpg' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شباب بحري - تمكين وتطوير الشباب</title>
+    <link rel="icon" href="{% static 'bahary_admin/images/logo.jpg' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
+        /* --- Variables (Refined for the new aesthetic) --- */
+        :root {
+            --primary-blue: #0047AB; /* A slightly softer, but still strong blue */
+            --light-blue: #ADD8E6; /* Light blue for accents/background */
+            --dark-text: #2c3e50; /* Darker text for readability */
+            --medium-text: #7f8c8d; /* Medium gray for body text */
+            --light-background: #f0f2f5; /* Very light gray for overall background */
+            --card-background: #ffffff; /* White for card backgrounds */
+            --shadow-light: rgba(0, 0, 0, 0.08); /* Subtle card shadow */
+            --shadow-medium: rgba(0, 0, 0, 0.15); /* More pronounced hover shadow */
+            --border-radius-large: 20px;
+            --border-radius-medium: 12px;
+            --section-spacing: 60px; /* Consistent vertical spacing between main sections */
+            --gradient-start: #6dd5ed; /* For backgrounds/accents */
+            --gradient-end: #2193b0;   /* For backgrounds/accents */
+        }
+
+        /* --- Base Styles --- */
+        html, body {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+
+        body {
             font-family: 'Cairo', sans-serif;
-            background-color: #f0f4ff;
+            background-color: var(--light-background);
+            direction: rtl;
+            line-height: 1.6;
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        /* --- Global Container for Centering Content --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px; /* Padding on sides for smaller screens */
+        }
+
+        /* --- Navbar (Floating & Transparent-ish) --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0; /* Vertical padding */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)); /* Semi-transparent white */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+        }
+
+        nav .nav-content { /* Inner container for alignment */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px; /* Same as main container */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo img {
+            height: 50px; /* Larger logo */
+            margin-left: 15px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .logo strong {
+            font-size: 1.6rem; /* Slightly larger brand name */
+            font-weight: 800; /* Extra bold */
+            color: var(--primary-blue); /* Logo text in primary blue */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px; /* More space between nav items */
+            margin: 0;
+            padding: 0;
+            transition: transform 0.3s ease-out; /* For slide-in effect */
+        }
+
+        nav ul li a {
+            color: var(--dark-text); /* Darker text for visibility on light nav */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px; /* Thicker underline */
+            background: var(--primary-blue); /* Blue underline */
+            bottom: 0;
+            right: 0;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-blue); /* Hover color */
+            transform: translateY(-2px);
+        }
+
+        nav .admin-btn a {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 10px 25px; /* More generous padding */
+            border-radius: var(--border-radius-medium); /* Match card radius */
+            text-decoration: none;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 71, 171, 0.2); /* Blue shadow */
+        }
+
+        nav .admin-btn a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 71, 171, 0.3);
+        }
+
+        /* Hamburger Menu Icon */
+        .menu-toggle {
+            display: none; /* Hidden by default, shown on mobile */
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary-blue);
+            z-index: 1001; /* Ensure it's above other elements */
+        }
+
+        /* --- Hero Section (Feature-like Card) --- */
+        .hero-wrapper {
+            background: var(--primary-blue); /* Base background color */
+            padding-top: 120px; /* Space for fixed nav + some extra */
+            padding-bottom: 80px;
+            min-height: 80vh; /* Ensure it takes up a good portion of the screen */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden; /* For any background elements */
+        }
+
+        .hero-wrapper::before,
+        .hero-wrapper::after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .hero-wrapper::before {
+            width: 300px;
+            height: 300px;
+            top: 5%;
+            left: 5%;
+        }
+
+        .hero-wrapper::after {
+            width: 400px;
+            height: 400px;
+            bottom: -10%;
+            right: 5%;
+        }
+
+
+        .hero {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius-large); /* Very rounded corners */
+            box-shadow: 0 15px 40px var(--shadow-medium); /* Stronger shadow for main hero card */
+            padding: 50px; /* Ample padding inside */
+            text-align: center;
+            max-width: 900px; /* Control width of the hero card */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            position: relative; /* For z-index over pseudo elements */
+            z-index: 10;
+        }
+
+        .hero .hero-content {
+            display: flex;
+            flex-direction: row-reverse; /* Text on right, image on left for RTL */
+            align-items: center;
+            gap: 40px; /* Space between text and image */
+            width: 100%;
+        }
+
+        .hero .text-content {
+            flex: 1; /* Take available space */
+            text-align: right; /* Text aligns right for RTL */
+        }
+
+        .hero h1 {
+            font-size: 3.8rem; /* Large and impactful heading */
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-weight: 800; /* Extra bold */
+            animation: fadeInSlideRight 1s ease-out forwards; /* Animation */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.05); /* Subtle text shadow */
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--medium-text);
+            margin-bottom: 30px;
+            line-height: 1.7;
+            max-width: 600px; /* Constrain text width */
+            text-align: justify; /* Justify for a clean block */
+            animation: fadeInSlideRight 1.2s ease-out forwards;
+            animation-delay: 0.2s; /* Delay for cascade */
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        .hero .hero-image {
+            flex: 0 0 400px; /* Fixed width for image container */
+            height: 350px;
+            background: url("{% static 'bahary_admin/images/hero.jpg' %}") center center/cover no-repeat;
+            border-radius: var(--border-radius-medium);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Image shadow */
+            overflow: hidden; /* Ensure image respects border-radius */
+            animation: fadeInScale 1.2s ease-out forwards;
+            animation-delay: 0.4s; /* Delay for cascade */
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        /* --- Sections (Card-based) --- */
+        section {
+            padding: var(--section-spacing) 0; /* Vertical spacing, horizontal padding from container */
+        }
+
+        .section-card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius-large);
+            box-shadow: 0 10px 30px var(--shadow-light); /* Softer shadow for content cards */
+            padding: 50px;
+            margin-bottom: var(--section-spacing); /* Space between cards */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05); /* Very subtle border */
+        }
+
+        .section-card:hover {
+            transform: translateY(-8px); /* More noticeable lift on hover */
+            box-shadow: 0 15px 40px var(--shadow-medium); /* Enhanced shadow on hover */
+        }
+
+        section h2 {
+            color: var(--primary-blue);
+            font-size: 3rem;
+            font-weight: 800;
             text-align: center;
+            margin-bottom: 40px; /* More space below section title */
+            position: relative;
+            padding-bottom: 10px;
         }
 
-        .container {
-            max-width: 600px;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        section h2::after {
+            content: '';
+            position: absolute;
+            width: 100px; /* Wider underline */
+            height: 5px; /* Thicker underline */
+            background: var(--light-blue); /* Light blue underline */
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            border-radius: 3px;
         }
 
-        .logo {
-            max-width: 120px;
-            margin-bottom: 1rem;
+        section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--medium-text);
+            text-align: justify;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        h1 {
-            color: rgba(0, 28, 154, 0.83);
-            font-size: 32px;
-            margin-bottom: 1rem;
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 0.95rem;
+            box-shadow: inset 0 5px 20px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
         }
 
-        p {
-            color: #333;
-            font-size: 18px;
-            margin-bottom: 2rem;
+        footer .icons {
+            margin-top: 25px;
+            font-size: 2rem; /* Larger icons */
+            display: flex;
+            justify-content: center;
+            gap: 25px;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: rgba(0, 28, 154, 0.83);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
+        footer .icons a {
+            color: var(--white);
             text-decoration: none;
-            margin: 0.5rem;
-            transition: background 0.3s ease;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
-        .btn:hover {
-            background-color: #021a90;
+        footer .icons a:hover {
+            color: var(--light-blue);
+            transform: scale(1.2) translateY(-3px);
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
+        /* --- Keyframes for Animations --- */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
             }
-            p {
-                font-size: 16px;
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInSlideRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+
+        /* --- Responsive Adjustments (Mobile Menu Logic) --- */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block; /* Show hamburger icon on small screens */
+                order: -1; /* Place it before logo if desired */
+            }
+
+            nav .nav-content {
+                flex-direction: row; /* Keep logo and toggle on same row */
+                justify-content: space-between; /* Space out logo and toggle */
+                align-items: center;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            nav ul {
+                display: none; /* Hide navigation links by default on mobile */
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--card-background); /* White background for menu */
+                position: absolute;
+                top: 100%; /* Position below the nav bar */
+                left: 0;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+                border-radius: 0 0 var(--border-radius-medium) var(--border-radius-medium);
+                overflow: hidden; /* Hide anything outside its bounds */
+                transform: translateY(-10px); /* Slightly off-screen for slide-down */
+                opacity: 0; /* Start transparent for fade-in */
+                pointer-events: none; /* Disable interaction when hidden */
+            }
+
+            nav ul.active {
+                display: flex; /* Show navigation links when active */
+                transform: translateY(0); /* Slide into view */
+                opacity: 1; /* Fade in */
+                pointer-events: auto; /* Enable interaction */
+            }
+
+            nav ul li {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 15px; /* Spacing between menu items */
+            }
+
+            nav ul li:last-child {
+                margin-bottom: 0;
+            }
+
+            nav ul li a {
+                color: var(--dark-text); /* Ensure links are readable on white background */
+                padding: 10px 0;
+                display: block; /* Make the entire area clickable */
+                font-size: 1.1rem;
+            }
+
+            nav ul li a:hover {
+                background-color: var(--light-background); /* Highlight on hover */
+            }
+
+            nav .admin-btn {
+                display: none; /* Hide admin button from main nav on mobile, optionally move it to menu */
+            }
+
+            /* Adjustments for hero section when nav height changes */
+            .hero-wrapper {
+                padding-top: 90px; /* Adjust based on new nav height on mobile */
+                min-height: auto;
+            }
+
+            .hero {
+                padding: 30px;
+                border-radius: var(--border-radius-medium);
+            }
+            .hero .hero-content {
+                flex-direction: column; /* Stack image and text */
+                gap: 30px;
+            }
+            .hero .text-content {
+                text-align: center; /* Center text when stacked */
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 20px;
+                text-align: center; /* Center paragraph when stacked */
+            }
+            .hero .hero-image {
+                flex: 0 0 auto; /* Allow image to size naturally */
+                width: 90%; /* Take up most of the width */
+                max-width: 300px; /* Constrain max width */
+                height: 200px;
+            }
+            .section-card {
+                padding: 30px;
+                margin-bottom: 40px;
+            }
+            section h2 {
+                font-size: 2.2rem;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav .logo img {
+                height: 40px;
+            }
+            nav .logo strong {
+                font-size: 1.4rem;
+            }
+            /* Nav ul specific media queries for extreme small screens can go here if needed */
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 0.9rem;
+            }
+            .section-card {
+                padding: 20px;
+            }
+            section h2 {
+                font-size: 1.8rem;
+            }
+            footer {
+                padding: 30px 15px;
+            }
+            footer .icons {
+                font-size: 1.6rem;
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شعار شباب بحري" class="logo">
-        <h1>شباب بحري</h1>
-        <p>منصة إلكترونية تهدف إلى تنظيم ومتابعة الأنشطة الشبابية في إطار وزارة الشباب والرياضة.</p>
-        <a href="/admin" class="btn">تسجيل الدخول</a>
-        <a href="https://www.facebook.com/baharyyouth" target="_blank" class="btn">تابعنا على فيسبوك</a>
+
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شعار شباب بحري">
+                <strong>شباب بحري</strong>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul id="navbarNav">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#about">من نحن</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+                <li><a href="/admin/" class="mobile-admin-btn">تسجيل الدخول</a></li>
+            </ul>
+            <div class="admin-btn desktop-only"> <a href="/admin/">تسجيل الدخول</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-wrapper">
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="text-content">
+                    <h1>أهلاً بك في <br> مبادرة شباب بحري</h1>
+                    <p>
+                        شباب بحري هي مبادرة رائدة لتمكين الشباب وتطوير قدراتهم القيادية والمجتمعية، تعمل تحت إشراف وزارة الشباب والرياضة. نهدف إلى بناء جيل واعٍ ومبتكر قادر على قيادة المستقبل.
+                    </p>
+                </div>
+                <div class="hero-image">
+                </div>
+            </div>
+        </section>
     </div>
+
+    <section id="about" class="container section-card">
+        <h2>من نحن</h2>
+        <p>
+            شباب بحري هي مبادرة شبابية رائدة تحت رعاية وزارة الشباب والرياضة، تأسست بهدف أساسي يتمثل في تمكين وتطوير القدرات الكmنة لدى الشباب المصري في مختلف المجالات الحيوية. نحن نؤمن بأن الشباب هم عماد المستقبل، ولذا نسعى جاهدين لتوفير بيئة داعمة ومحفزة تتيح لهم الابتكار، التعلم، والمساهمة الفاعلة في مجتمعاتهم.
+            <br><br>
+            نعمل من خلال مجموعة متنوعة من الفعاليات، الأنشطة المجتمعية، وورش العمل التدريبية المتخصصة التي تغطي جوانب متعددة مثل التنمية الذاتية، المهارات القيادية، الريادة المجتمعية، والوعي الثقافي. هدفنا هو بناء جيل من الشباب الواعي، القادر على تحمل المسؤولية، والمؤهل لقيادة مسيرة التنمية والازدهار في مصر.
+        </p>
+    </section>
+
+    <section id="contact" class="container section-card">
+        <h2>تواصل معنا</h2>
+        <p>
+            نحن متحمسون للتواصل معكم! سواء كانت لديكم استفسارات، اقتراحات، أو ترغبون في الانضمام إلى مبادرتنا، لا تترددوا في التواصل معنا عبر قنواتنا الرسمية. تابعوا صفحتنا على فيسبوك للحصول على آخر الأخبار والفعاليات، أو راسلونا مباشرة عبر البريد الإلكتروني. فريقنا مستعد دائماً للاستماع وتقديم الدعم.
+        </p>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div>
+                جميع الحقوق محفوظة &copy; شباب بحري 2025
+            </div>
+            <div class="icons">
+                <a href="https://www.facebook.com/baharyyouth" target="_blank" aria-label="صفحتنا على فيسبوك">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="mailto:info@baharyyouth.org" aria-label="راسلنا عبر البريد الإلكتروني">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navbarNav = document.getElementById('navbarNav');
+
+            if (menuToggle && navbarNav) {
+                menuToggle.addEventListener('click', function() {
+                    navbarNav.classList.toggle('active');
+                });
+
+                // Close menu when a link is clicked (for smoother navigation)
+                navbarNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        navbarNav.classList.remove('active');
+                    });
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>
