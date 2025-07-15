@@ -5,6 +5,8 @@ from .models import News
 from .serializers import NewsSerializers
 from rest_framework.permissions import IsAuthenticated
 from project.paginations import BaharyYouthPagination
+from .filters import NewsFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 
@@ -14,6 +16,8 @@ class NewsViewSets(BahariYouthViewset):
     http_method_names = ['get']
     permission_classes = [IsAuthenticated]
     pagination_class = BaharyYouthPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = NewsFilter
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

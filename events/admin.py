@@ -33,7 +33,7 @@ class EventAdmin(admin.ModelAdmin):
 
     def has_module_permission(self, request):
         if request.user.is_authenticated:
-            if request.user.role == 'unit_member' and request.user.central_unit =='وحدة التنظيم المركزي' :
+            if request.user.role == 'unit_member' and request.user.central_unit =='وحدة التنظيم المركزي' or request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة' :
                 return True
             if request.user.is_superuser:
                 return True
@@ -46,7 +46,7 @@ class EventAdmin(admin.ModelAdmin):
             return True
         if request.user.role == 'central_unit_head' and request.user.central_unit.name == 'وحدة التنظيم المركزي':
             return True
-        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'وحدة التنظيم المركزي'
+        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'وحدة التنظيم المركزي' or request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة'
 
     def has_view_permission(self, request, obj=None):
         if not request.user.is_authenticated:
@@ -55,7 +55,7 @@ class EventAdmin(admin.ModelAdmin):
             return True
         if request.user.role == 'central_unit_head' and request.user.central_unit.name == 'وحدة التنظيم المركزي':
             return True
-        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'وحدة التنظيم المركزي'
+        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'وحدة التنظيم المركزي' or request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة'
 
     def has_delete_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -71,13 +71,15 @@ class EventAdmin(admin.ModelAdmin):
             return True
         if request.user.role == 'central_unit_head' and request.user.central_unit.name == 'وحدة التنظيم المركزي':
             return True
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return True
         if obj and obj.created_by != request.user:
             return False
         return True
     
     def has_add_permission(self, request):
         if request.user.is_authenticated:
-            if request.user.role == 'unit_member' and request.user.central_unit.name =='وحدة التنظيم المركزي' :
+            if request.user.role == 'unit_member' and request.user.central_unit.name =='وحدة التنظيم المركزي'  :
                 return True
             if request.user.role == 'central_unit_head' and request.user.central_unit.name == 'وحدة التنظيم المركزي':
                 return True

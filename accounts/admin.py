@@ -60,8 +60,7 @@ class CustomUserAdmin(BaseUserAdmin):
         }),
         ('تواريخ', {'fields': ('last_login',)}),
     )
-
-    # ✅ حل المشكلة: تعريف add_fieldsets يدويًا
+    
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -69,11 +68,49 @@ class CustomUserAdmin(BaseUserAdmin):
         }),
     )
     
+    
+    
     def get_readonly_fields(self, request, obj=None):
         readonly = super().get_readonly_fields(request, obj)
         if not request.user.is_superuser:
             return readonly + ['password']
         return readonly
+    
+    def has_module_permission(self, request):
+        if not request.user.is_authenticated:
+            return False
+        if request.user.is_superuser:
+            return True
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return True
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if request.user.role == 'central_unit_head' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return True
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return True
+        return False
+
+    def has_add_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if request.user.role == 'central_unit_head' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return True
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return False
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if request.user.role == 'central_unit_head' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return True
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
+            return False
+        return False
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = super().get_fieldsets(request, obj)

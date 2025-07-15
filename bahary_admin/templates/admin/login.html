@@ -3,17 +3,40 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول | شباب بحري</title>
     <link rel="icon" type="image/png" href="{% static 'bahary_admin/images/logo.jpg' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* --- Color Variables for Bahary Youth Login (Blue accents on White background) --- */
         :root {
-            --main-blue:rgba(0, 28, 154, 0.83);
-            --light-gray: #f5f5f5;
-            --white: #ffffff;
-            --input-border: #ccc;
+            --page-background: #f0f2f5; /* Very light gray background for a softer feel */
+            --card-background: #ffffff; /* Pure white for the main card */
+            --input-background: #f9fbfd; /* Slightly off-white for inputs, subtle contrast */
+            --text-color-dark: #2c3e50; /* Darker text for headings, professional feel */
+            --text-color-medium: #7f8c8d; /* Medium gray text for labels/prompts */
+            --link-color: #3498db; /* Clear blue for links/accents, slightly brighter */
+            --link-hover-color: #2980b9; /* Darker blue on hover */
+            --primary-button-bg: #3498db; /* Clear blue for buttons */
+            --primary-button-hover: #2980b9; /* Darker blue on hover */
+            --border-color: #e0e6ed; /* Subtle light gray border */
+            --border-radius-large: 20px; /* More pronounced rounded corners */
+            --border-radius-medium: 12px; /* Slightly larger input/button radius */
+            --shadow-strong: rgba(0, 0, 0, 0.1); /* Lighter, broader shadow for depth */
+            --shadow-subtle: rgba(0, 0, 0, 0.05);
+
+            /* Gradient for left section */
+            --left-gradient-start: #3498db; /* Fresh blue */
+            --left-gradient-end: #2980b9; /* Deeper blue */
+
+            /* Error specific variables */
+            --error-text-color: #e74c3c; /* Red for errors */
+            --error-border-color: #e74c3c;
+            --error-background-color: rgba(231, 76, 60, 0.08); /* Very subtle red tint */
         }
 
+        /* --- Base Styles --- */
         * {
             box-sizing: border-box;
         }
@@ -22,128 +45,518 @@
             height: 100%;
             margin: 0;
             font-family: 'Cairo', sans-serif;
-            background-color: var(--light-gray);
+            background-color: var(--page-background); /* Soft light gray background */
+            color: var(--text-color-dark); /* Default text color */
+            display: flex; /* Use flexbox to center the card */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Prevent scroll on initial load for centered layout */
+            padding: 20px;
         }
 
-        .login-container {
+        /* --- Main Login Card --- */
+        .auth-card {
             display: flex;
-            height: 100vh;
-            flex-direction: row-reverse; /* RTL layout */
+            background-color: var(--card-background);
+            border-radius: var(--border-radius-large);
+            box-shadow: 0 15px 40px var(--shadow-strong); /* Deeper, softer shadow */
+            max-width: 950px; /* Slightly wider card */
+            width: 100%;
+            overflow: hidden;
+            min-height: 580px; /* Slightly taller for more breathing room */
+            animation: fadeIn 0.8s ease-out; /* Fade in animation */
         }
 
-        .login-left {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Left Side: Image Section (Bahary Youth Branding) --- */
+        .auth-card-left {
+            flex: 1.1; /* Slightly larger left section */
+            position: relative;
+            background:
+                linear-gradient(135deg, var(--left-gradient-start), var(--left-gradient-end)), /* Refined blue gradient */
+                url("{% static 'bahary_admin/images/logo.jpg' %}") center center / cover no-repeat;
+            background-blend-mode: overlay;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 40px; /* Increased padding */
+            color: var(--page-background); /* White text on blue background */
+            text-align: right; /* RTL alignment */
+            position: relative; /* For the subtle overlay */
+        }
+
+        /* Subtle texture/pattern overlay for the left side */
+        .auth-card-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.05) 1%, transparent 60%);
+            z-index: 1;
+        }
+
+        .auth-card-left .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Space out logo and back button */
+            width: 100%;
+            z-index: 2; /* Ensure content is above pseudo-element */
+        }
+
+        .auth-card-left .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.9rem; /* Slightly larger logo text */
+            font-weight: 800; /* Bolder font */
+            color: var(--page-background);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle text shadow */
+        }
+        .auth-card-left .logo img {
+            height: 55px; /* Larger logo size */
+            width: 55px;
+            border-radius: 50%;
+            margin-right: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Shadow for the logo image */
+        }
+        html[dir="rtl"] .auth-card-left .logo img {
+            margin-right: 0;
+            margin-left: 12px;
+        }
+
+        .auth-card-left .back-to-website {
+            background-color: rgba(255, 255, 255, 0.25); /* More visible semi-transparent button */
+            color: var(--page-background);
+            padding: 9px 18px; /* Larger padding */
+            border-radius: var(--border-radius-medium);
+            text-decoration: none;
+            font-size: 0.95rem; /* Slightly larger font */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* Subtle shadow */
+            font-weight: 600;
+        }
+
+        .auth-card-left .back-to-website:hover {
+            background-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .auth-card-left .back-to-website i {
+            margin-right: 8px;
+        }
+        html[dir="rtl"] .auth-card-left .back-to-website i {
+            margin-right: 0;
+            margin-left: 8px;
+        }
+
+        .auth-card-left .slogan-content {
+            text-align: right;
+            margin-top: auto;
+            width: 100%;
+            z-index: 2;
+            padding-bottom: 20px; /* Padding from bottom of the card */
+        }
+
+        .auth-card-left h2 {
+            font-size: 2.6rem; /* Larger, more impactful slogan */
+            margin-bottom: 15px;
+            font-weight: 700; /* Semibold */
+            line-height: 1.35;
+            color: var(--page-background);
+            text-shadow: 0 3px 8px rgba(0,0,0,0.3); /* Stronger text shadow for legibility */
+        }
+
+        .auth-card-left .dots {
+            display: flex;
+            gap: 10px; /* More space between dots */
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .auth-card-left .dot {
+            width: 10px; /* Larger dots */
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.3); /* Softer inactive dot */
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .auth-card-left .dot.active {
+            background-color: var(--page-background); /* Pure white for active dot */
+            transform: scale(1.2); /* Slightly larger active dot */
+        }
+
+        /* --- Right Side: Form Section --- */
+        .auth-card-right {
             flex: 1;
-            background: var(--white);
+            padding: 50px 40px; /* More vertical padding */
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            border-left: 1px solid #ddd;
+            color: var(--text-color-dark);
+            text-align: right;
         }
 
-        .login-left img {
-            max-height: 120px;
-            margin-bottom: 1rem;
+        .auth-card-right h2 {
+            font-size: 1.4rem; /* Larger form heading */
+            margin-bottom: 0.8rem;
+            font-weight: 800; /* Bolder */
+            color: var(--text-color-dark);
         }
 
-        .login-left h1 {
-            font-size: 28px;
-            color: var(--main-blue);
-            margin-bottom: 0.5rem;
+        .auth-card-right .prompt {
+            font-size: 1rem; /* Slightly larger prompt */
+            color: var(--text-color-medium);
+            margin-bottom: 2.5rem; /* More space below prompt */
         }
 
-        .login-left p {
-            font-size: 16px;
-            color: #555;
-            text-align: center;
+        .auth-card-right .prompt a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 700; /* Bolder link */
+            transition: color 0.3s ease;
         }
 
-        .login-right {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--main-blue);
-            color: var(--white);
+        .auth-card-right .prompt a:hover {
+            color: var(--link-hover-color);
+            text-decoration: underline; /* Add underline on hover */
         }
 
-        .login-form {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(23, 11, 128, 0.8);
+        /* Form elements */
+        .form-group {
+            margin-bottom: 1.8rem; /* More space between form groups */
+        }
+        .form-group:last-of-type {
+             margin-bottom: 1.5rem; /* Adjust last one before the button */
+        }
+
+        .auth-card-right label {
+            display: block;
+            margin-bottom: 10px; /* More space between label and input */
+            font-size: 0.98rem; /* Slightly larger label font */
+            color: var(--text-color-dark); /* Darker labels for better visibility */
+            font-weight: 600; /* Semibold labels */
+        }
+
+        .auth-card-right input[type="text"],
+        .auth-card-right input[type="email"],
+        .auth-card-right input[type="password"] {
             width: 100%;
-            max-width: 400px;
-            color: black;
+            padding: 14px 18px; /* Increased padding for inputs */
+            background-color: var(--input-background);
+            color: var(--text-color-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-medium);
+            font-size: 1.05rem; /* Slightly larger input text */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
 
-        .login-form h2 {
-            margin-bottom: 1.5rem;
-            text-align: center;
-            color: var(--main-blue);
+        .auth-card-right input[type="text"]:focus,
+        .auth-card-right input[type="email"]:focus,
+        .auth-card-right input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary-button-bg);
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.25); /* Broader, softer focus shadow */
+            background-color: var(--card-background); /* White background on focus */
         }
 
-        .login-form input {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid var(--input-border);
-            border-radius: 6px;
-            font-size: 16px;
+        .auth-card-right input::placeholder {
+            color: var(--text-color-medium);
+            opacity: 0.7; /* Make placeholder slightly less prominent */
         }
 
-        .login-form button {
-            background-color: var(--main-blue);
-            color: var(--white);
+        /* Password field with eye icon */
+        .password-group input {
+            padding-left: 50px; /* More space for eye icon */
+        }
+        html[dir="rtl"] .password-group input {
+            padding-right: 50px; /* More space for eye icon on RTL */
+        }
+
+        .password-group .toggle-password {
+            left: 18px; /* Adjust icon position */
+            font-size: 1.1rem; /* Larger icon */
+        }
+        html[dir="rtl"] .password-group .toggle-password {
+            right: 18px;
+        }
+
+        /* Forgot password link */
+        .forgot-password-link {
+            display: block;
+            text-align: left; /* Align to left (LTR) */
+            margin-top: -1rem; /* Pull up closer to password field */
+            margin-bottom: 2rem; /* Space before button */
+            font-size: 0.9rem;
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        html[dir="rtl"] .forgot-password-link {
+            text-align: right; /* Align to right (RTL) */
+        }
+        .forgot-password-link:hover {
+            color: var(--link-hover-color);
+            text-decoration: underline;
+        }
+
+
+        /* Main action button */
+        .auth-card-right button[type="submit"] {
+            background: linear-gradient(45deg, var(--primary-button-bg) 0%, var(--primary-button-hover) 100%); /* Gradient button */
+            color: var(--page-background);
             border: none;
-            padding: 0.75rem;
-            border-radius: 6px;
+            padding: 15px 30px; /* Larger button */
+            border-radius: var(--border-radius-medium);
             width: 100%;
-            font-size: 16px;
+            font-size: 1.2rem; /* Larger font */
+            font-weight: 700; /* Bolder text */
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.35); /* Stronger button shadow */
+            letter-spacing: 0.5px; /* Subtle letter spacing */
         }
 
-        .login-form button:hover {
-            background-color: #004957;
+        .auth-card-right button[type="submit"]:hover {
+            background: linear-gradient(45deg, var(--primary-button-hover) 0%, var(--primary-button-bg) 100%); /* Inverted gradient on hover */
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 12px 28px rgba(52, 152, 219, 0.45);
+        }
+        .auth-card-right button[type="submit"]:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
+        }
+
+        /* --- Error Styles --- */
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px; /* More space below input, above error */
+            margin-bottom: 0; /* Remove bottom margin as form-group has it */
+            color: var(--error-text-color);
+            font-size: 0.88rem; /* Slightly larger error text */
+            text-align: right;
+        }
+
+        .errorlist li {
+            padding: 2px 0;
+        }
+
+        /* Styling for input fields with errors */
+        .auth-card-right input.is-invalid {
+            border-color: var(--error-border-color) !important;
+            box-shadow: 0 0 0 3px var(--error-background-color);
+            background-color: var(--error-background-color);
+        }
+
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 992px) {
+            .auth-card {
+                max-width: 800px;
+                min-height: 500px;
+            }
+            .auth-card-left {
+                padding: 30px;
+                flex: 1; /* Equal flex */
+            }
+            .auth-card-left .logo {
+                font-size: 1.6rem;
+            }
+            .auth-card-left .logo img {
+                height: 45px;
+                width: 45px;
+            }
+            .auth-card-left h2 {
+                font-size: 2.2rem;
+            }
+            .auth-card-right {
+                padding: 40px 30px;
+            }
+            .auth-card-right h2 {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
-            .login-container {
-                flex-direction: column;
+            body {
+                overflow-y: auto; /* Allow scrolling on small screens */
+                align-items: flex-start; /* Align to top on small screens to prevent content cut-off */
+                padding: 15px;
             }
-            .login-left,
-            .login-right {
+            .auth-card {
+                flex-direction: column; /* Stack sections vertically */
+                max-width: 450px; /* Narrower card */
+                min-height: auto;
+                margin-top: 20px; /* Push down from top for mobile */
+                margin-bottom: 20px;
+            }
+            .auth-card-left, .auth-card-right {
                 flex: none;
                 width: 100%;
-                height: auto;
-                border: none;
+                padding: 25px;
             }
-            .login-right {
-                padding: 2rem 1rem;
+            .auth-card-left {
+                min-height: 220px; /* Shorter image section */
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0; /* Ensure no radius on bottom when stacked */
+                border-top-right-radius: var(--border-radius-large); /* Keep top-right */
+                border-top-left-radius: var(--border-radius-large); /* Keep top-left */
+            }
+            .auth-card-left .logo-section {
+                justify-content: space-between;
+            }
+            .auth-card-left .slogan-content {
+                margin-top: 20px;
+                text-align: center;
+                padding-bottom: 0;
+            }
+            .auth-card-left .dots {
+                justify-content: center;
+                margin-top: 15px;
+            }
+            .auth-card-left h2 {
+                font-size: 1.9rem;
+            }
+            .auth-card-left .logo {
+                font-size: 1.5rem;
+            }
+            .auth-card-left .logo img {
+                height: 40px;
+                width: 40px;
+            }
+            .auth-card-right {
+                border-radius: 0; /* Remove top-right radius when stacked */
+                border-bottom-left-radius: var(--border-radius-large); /* Add back bottom-left */
+                border-bottom-right-radius: var(--border-radius-large); /* Add bottom-right */
+            }
+            .auth-card-right h2 {
+                font-size: 1.8rem;
+            }
+            .auth-card-right .prompt {
+                margin-bottom: 1.5rem;
+            }
+            .form-group {
+                margin-bottom: 1.2rem;
+            }
+            .auth-card-right button[type="submit"] {
+                padding: 13px 25px;
+                font-size: 1.1rem;
+                margin-top: 1.5rem;
+            }
+            .forgot-password-link {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-card-left h2 {
+                font-size: 1.6rem;
+            }
+            .auth-card-right h2 {
+                font-size: 1.6rem;
+            }
+            .auth-card-right input {
+                font-size: 0.95rem;
+                padding: 12px 15px;
+            }
+            .password-group input {
+                padding-left: 45px;
+            }
+            html[dir="rtl"] .password-group input {
+                padding-right: 45px;
+            }
+            .password-group .toggle-password {
+                left: 12px;
+                font-size: 1rem;
+            }
+            html[dir="rtl"] .password-group .toggle-password {
+                right: 12px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <!-- Right: Login form -->
-        <div class="login-right">
-            <form method="post" class="login-form">
-                <h2>تسجيل الدخول</h2>
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">دخول</button>
-            </form>
+    <div class="auth-card">
+        <div class="auth-card-left">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شباب بحري شعار">
+                </div>
+                <a href="{% url 'home' %}" class="back-to-website">
+                    <i class="fas fa-arrow-right"></i> <span>العودة للموقع</span>
+                </a>
+            </div>
         </div>
 
-        <!-- Left: Logo and branding -->
-        <div class="login-left">
-            <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شباب بحري">
-            <h1>شباب بحري</h1>
-            <p>مرحبًا بك في لوحة تحكم الإدارة</p>
+        <div class="auth-card-right">
+            <h2>تسجيل الدخول</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">البريد الإلكتروني</label>
+                    <input type="text" name="username" id="id_username" placeholder="أدخل بريدك الإلكتروني" class="{% if form.username.errors %}is-invalid{% endif %}" value="{{ form.username.value|default_if_none:'' }}">
+                    {% if form.username.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group password-group">
+                    <label for="id_password">كلمة المرور</label>
+                    <input type="password" name="password" id="id_password" placeholder="أدخل كلمة المرور" class="{% if form.password.errors %}is-invalid{% endif %}">
+                    <i class="fas fa-eye-slash toggle-password" id="togglePassword"></i>
+                    {% if form.password.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+
+                <button type="submit">تسجيل الدخول</button>
+            </form>
         </div>
     </div>
+
+    <script>
+        // JavaScript for password toggle
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('input[name="password"]');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function (e) {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        // Add 'is-invalid' class to input fields with errors for better styling
+        document.querySelectorAll('.errorlist').forEach(function(errorList) {
+            let formGroup = errorList.closest('.form-group');
+            if (formGroup) {
+                let inputInsideGroup = formGroup.querySelector('input, select, textarea');
+                if (inputInsideGroup) {
+                    inputInsideGroup.classList.add('is-invalid');
+                }
+            }
+        });
+
+    </script>
 </body>
 </html>

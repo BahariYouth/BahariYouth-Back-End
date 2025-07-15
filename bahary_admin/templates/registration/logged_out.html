@@ -3,6 +3,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تم تسجيل الخروج | شباب بحري</title>
     <link rel="icon" type="image/png" href="{% static 'bahary_admin/images/logo.jpg' %}">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
@@ -11,22 +12,27 @@
             height: 100%;
             margin: 0;
             font-family: 'Cairo', sans-serif;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
 
+        /* Responsive container for the entire page */
         .logout-container {
             display: flex;
             height: 100vh;
+            flex-direction: row; /* Default to row for desktop */
         }
 
+        /* Left section (logo and title) */
         .logout-left {
             flex: 1;
-            background-color: rgba(0, 28, 154, 0.83);;;
+            background-color: rgba(0, 28, 154, 0.83); /* Using the provided color */
             color: white;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2rem;
+            text-align: center; /* Ensure text is centered */
         }
 
         .logout-left img {
@@ -38,14 +44,21 @@
         .logout-left h1 {
             margin: 0;
             font-size: 28px;
+            white-space: nowrap; /* Prevent "شباب بحري" from wrapping */
         }
 
+        .logout-left p {
+            font-size: 18px; /* Slightly larger for better readability */
+        }
+
+        /* Right section (logout message) */
         .logout-right {
             flex: 1;
             background-color: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 1rem; /* Add padding for smaller screens */
         }
 
         .logout-box {
@@ -54,37 +67,134 @@
             border-radius: 12px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             max-width: 400px;
+            width: 100%; /* Make it take full width on small screens */
             text-align: center;
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
         .logout-box h2 {
-            color:rgba(0, 28, 154, 0.83);;
+            color: rgba(0, 28, 154, 0.83);
             margin-bottom: 1rem;
+            font-size: 24px; /* Adjust for responsiveness */
         }
 
         .logout-box p {
             color: #333;
             margin-bottom: 1.5rem;
+            font-size: 16px; /* Adjust for responsiveness */
         }
 
         .logout-box a {
-            background-color:rgba(0, 28, 154, 0.83);;;
+            background-color: rgba(0, 28, 154, 0.83);
             color: white;
             text-decoration: none;
             padding: 0.7rem 1.2rem;
             border-radius: 6px;
             display: inline-block;
+            transition: background-color 0.3s ease; /* Smooth hover effect */
         }
 
         .logout-box a:hover {
-            background-color: #005f6b;
+            background-color: #005f6b; /* Slightly darker on hover */
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+
+        /* For screens smaller than 768px (common tablet breakpoint) */
+        @media (max-width: 768px) {
+            .logout-container {
+                flex-direction: column; /* Stack sections vertically */
+                height: auto; /* Allow height to adjust to content */
+                min-height: 100vh; /* Ensure it still takes full viewport height */
+            }
+
+            .logout-left {
+                padding: 1.5rem;
+                height: 30vh; /* Give left section a fixed height */
+                flex: none; /* Remove flex grow/shrink */
+            }
+
+            .logout-left img {
+                max-height: 80px; /* Slightly smaller logo */
+            }
+
+            .logout-left h1 {
+                font-size: 24px; /* Adjust font size */
+            }
+
+            .logout-left p {
+                font-size: 16px;
+            }
+
+            .logout-right {
+                padding: 1.5rem; /* Adjust padding */
+                height: 70vh; /* Give right section remaining height */
+                flex: none;
+            }
+
+            .logout-box {
+                padding: 1.5rem; /* Reduce padding inside the box */
+                margin: 0 15px; /* Add horizontal margin to prevent sticking to edges */
+                max-width: 350px; /* Limit max-width even on smaller screens */
+            }
+
+            .logout-box h2 {
+                font-size: 22px;
+            }
+
+            .logout-box p {
+                font-size: 15px;
+            }
+        }
+
+        /* For screens smaller than 480px (common mobile breakpoint) */
+        @media (max-width: 480px) {
+            .logout-left {
+                padding: 1rem;
+                height: 25vh;
+            }
+
+            .logout-left img {
+                max-height: 70px;
+            }
+
+            .logout-left h1 {
+                font-size: 20px;
+            }
+
+            .logout-left p {
+                font-size: 14px;
+            }
+
+            .logout-right {
+                padding: 1rem;
+                height: 75vh;
+            }
+
+            .logout-box {
+                padding: 1rem;
+                margin: 0 10px;
+            }
+
+            .logout-box h2 {
+                font-size: 20px;
+            }
+
+            .logout-box p {
+                font-size: 14px;
+            }
+
+            .logout-box a {
+                padding: 0.6rem 1rem;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="logout-container">
         <div class="logout-left">
-            <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شباب بحري">
+            <img src="{% static 'bahary_admin/images/logo.jpg' %}" alt="شعار شباب بحري">
             <h1>شباب بحري</h1>
             <p>لوحة التحكم</p>
         </div>

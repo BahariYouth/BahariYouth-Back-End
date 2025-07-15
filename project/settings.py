@@ -9,6 +9,20 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = False
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-csrftoken',
+    'accept',
+    'origin',
+    'user-agent',
+    'accept-encoding',
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+]
 
 import os
 import logging.config
@@ -61,6 +75,8 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'nested_admin',
+    'corsheaders',
+    'django_filters',
 
     # my apps
     'accounts.apps.AccountsConfig',
@@ -75,9 +91,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',

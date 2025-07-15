@@ -131,7 +131,7 @@
 
         nav .admin-btn a {
             background-color: var(--primary-blue);
-            color: var(--white);
+            color: white; /* Changed from var(--white) assuming it's not defined */
             padding: 10px 25px; /* More generous padding */
             border-radius: var(--border-radius-medium); /* Match card radius */
             text-decoration: none;
@@ -193,7 +193,6 @@
             right: 5%;
         }
 
-
         .hero {
             background-color: var(--card-background);
             border-radius: var(--border-radius-large); /* Very rounded corners */
@@ -202,7 +201,7 @@
             text-align: center;
             max-width: 900px; /* Control width of the hero card */
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Changed to column to stack image then text */
             align-items: center;
             position: relative; /* For z-index over pseudo elements */
             z-index: 10;
@@ -210,15 +209,15 @@
 
         .hero .hero-content {
             display: flex;
-            flex-direction: row-reverse; /* Text on right, image on left for RTL */
-            align-items: center;
-            gap: 40px; /* Space between text and image */
+            flex-direction: column; /* Changed to column to stack image then text */
+            align-items: center; /* Center items horizontally when stacked */
+            gap: 40px; /* Space between image and text */
             width: 100%;
         }
 
         .hero .text-content {
             flex: 1; /* Take available space */
-            text-align: right; /* Text aligns right for RTL */
+            text-align: center; /* Center text below image */
         }
 
         .hero h1 {
@@ -241,18 +240,21 @@
             animation: fadeInSlideRight 1.2s ease-out forwards;
             animation-delay: 0.2s; /* Delay for cascade */
             opacity: 0; /* Start hidden for animation */
+            margin-left: auto; /* Center with auto margins for justify */
+            margin-right: auto;
         }
 
         .hero .hero-image {
-            flex: 0 0 400px; /* Fixed width for image container */
-            height: 350px;
-            background: url("{% static 'bahary_admin/images/hero.jpg' %}") center center/cover no-repeat;
+           width: 100%;
+            max-width: 657px;
+            height: 257px;
+            background: url(/static/bahary_admin/images/hero.jpg) center center / cover no-repeat;
             border-radius: var(--border-radius-medium);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Image shadow */
-            overflow: hidden; /* Ensure image respects border-radius */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             animation: fadeInScale 1.2s ease-out forwards;
-            animation-delay: 0.4s; /* Delay for cascade */
-            opacity: 0; /* Start hidden for animation */
+            animation-delay: 0.4s;
+            opacity: 0;
         }
 
         /* --- Sections (Card-based) --- */
@@ -309,7 +311,7 @@
         /* --- Footer --- */
         footer {
             background-color: var(--primary-blue);
-            color: var(--white);
+            color: white; /* Changed from var(--white) assuming it's not defined */
             padding: 40px 20px;
             text-align: center;
             font-size: 0.95rem;
@@ -325,7 +327,7 @@
         }
 
         footer .icons a {
-            color: var(--white);
+            color: white; /* Changed from var(--white) assuming it's not defined */
             text-decoration: none;
             transition: color 0.3s ease, transform 0.2s ease;
         }
@@ -434,7 +436,7 @@
                 border-radius: var(--border-radius-medium);
             }
             .hero .hero-content {
-                flex-direction: column; /* Stack image and text */
+                flex-direction: column; /* Keep stacked for mobile */
                 gap: 30px;
             }
             .hero .text-content {
@@ -450,10 +452,12 @@
                 text-align: center; /* Center paragraph when stacked */
             }
             .hero .hero-image {
-                flex: 0 0 auto; /* Allow image to size naturally */
-                width: 90%; /* Take up most of the width */
-                max-width: 300px; /* Constrain max width */
-                height: 200px;
+                flex: 0 0 auto;
+                width: 90%;
+                max-width: 300px;
+                height: 128px;
+    
+}
             }
             .section-card {
                 padding: 30px;
@@ -510,23 +514,21 @@
                 <li><a href="#home">الرئيسية</a></li>
                 <li><a href="#about">من نحن</a></li>
                 <li><a href="#contact">تواصل معنا</a></li>
-                <li><a href="/admin/" class="mobile-admin-btn">تسجيل الدخول</a></li>
+                <li class="mobile-only-btn"><a href="/admin/">تسجيل الدخول</a></li>
             </ul>
-            <div class="admin-btn desktop-only"> <a href="/admin/">تسجيل الدخول</a>
-            </div>
         </div>
     </nav>
 
     <div class="hero-wrapper">
         <section class="hero" id="home">
             <div class="hero-content">
+                <div class="hero-image">
+                </div>
                 <div class="text-content">
                     <h1>أهلاً بك في <br> مبادرة شباب بحري</h1>
                     <p>
                         شباب بحري هي مبادرة رائدة لتمكين الشباب وتطوير قدراتهم القيادية والمجتمعية، تعمل تحت إشراف وزارة الشباب والرياضة. نهدف إلى بناء جيل واعٍ ومبتكر قادر على قيادة المستقبل.
                     </p>
-                </div>
-                <div class="hero-image">
                 </div>
             </div>
         </section>
@@ -535,7 +537,7 @@
     <section id="about" class="container section-card">
         <h2>من نحن</h2>
         <p>
-            شباب بحري هي مبادرة شبابية رائدة تحت رعاية وزارة الشباب والرياضة، تأسست بهدف أساسي يتمثل في تمكين وتطوير القدرات الكmنة لدى الشباب المصري في مختلف المجالات الحيوية. نحن نؤمن بأن الشباب هم عماد المستقبل، ولذا نسعى جاهدين لتوفير بيئة داعمة ومحفزة تتيح لهم الابتكار، التعلم، والمساهمة الفاعلة في مجتمعاتهم.
+            شباب بحري هي مبادرة شبابية رائدة تحت رعاية وزارة الشباب والرياضة، تأسست بهدف أساسي يتمثل في تمكين وتطوير القدرات الكامنة لدى الشباب المصري في مختلف المجالات الحيوية. نحن نؤمن بأن الشباب هم عماد المستقبل، ولذا نسعى جاهدين لتوفير بيئة داعمة ومحفزة تتيح لهم الابتكار، التعلم، والمساهمة الفاعلة في مجتمعاتهم.
             <br><br>
             نعمل من خلال مجموعة متنوعة من الفعاليات، الأنشطة المجتمعية، وورش العمل التدريبية المتخصصة التي تغطي جوانب متعددة مثل التنمية الذاتية، المهارات القيادية، الريادة المجتمعية، والوعي الثقافي. هدفنا هو بناء جيل من الشباب الواعي، القادر على تحمل المسؤولية، والمؤهل لقيادة مسيرة التنمية والازدهار في مصر.
         </p>

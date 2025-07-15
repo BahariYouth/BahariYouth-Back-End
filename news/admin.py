@@ -71,7 +71,7 @@ class NewsAdmin(admin.ModelAdmin):
             return True
         if request.user.role == 'central_unit_head' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي':
             return True
-        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي'
+        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي' or request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة'
 
     def has_view_permission(self, request, obj=None):
         if not request.user.is_authenticated:
@@ -80,12 +80,14 @@ class NewsAdmin(admin.ModelAdmin):
             return True
         if request.user.role == 'central_unit_head' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي':
             return True
-        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي'
+        return request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي' or request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة'
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         if request.user.role == 'central_unit_head' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي':
+            return True
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
             return True
         if obj and obj.created_by != request.user:
             return False
