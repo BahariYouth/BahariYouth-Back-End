@@ -6,8 +6,8 @@ from accounts.models import User
 from .forms import GovernorateForm,CentralUnitrateForm
     
 class GovernorateAdmin(admin.ModelAdmin):
-    list_display = ['name', 'address', 'head','vice']
-    search_fields = ['name','head','vice']
+    list_display = ['name_ar','name_en' ,'address_ar','address_en', 'head','vice']
+    search_fields = ['name_ar','head','vice']
     readonly_fields = ['latitude', 'longitude']
     form = GovernorateForm
     

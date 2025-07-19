@@ -3,12 +3,19 @@ from django.conf import settings
 import re
 
 class Governorate(models.Model):
-    name = models.CharField(
+    name_ar = models.CharField(
         max_length=100,
-        verbose_name="اسم المحافظة"
+        verbose_name="اسم المحافظة بالعربي"
     )
-    address = models.TextField(
-        verbose_name="العنوان"
+    name_en = models.CharField(
+        max_length=100,
+        verbose_name="اسم المحافظة بالانجليزي"
+    )
+    address_ar = models.TextField(
+        verbose_name="العنوان بالعربي"
+    )
+    address_en = models.TextField(
+        verbose_name="العنوان بالانجليزي"
     )
     head = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -60,7 +67,7 @@ class Governorate(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.name_ar
 
     class Meta:
         verbose_name = "محافظة"

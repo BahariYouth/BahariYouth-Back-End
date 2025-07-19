@@ -7,7 +7,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG =False
+DEBUG = True
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = [
@@ -84,6 +84,8 @@ INSTALLED_APPS = [
     'bahary_admin',
     'events',
     'news',
+    'registrations',
+    'activities',
 ]
 
 REST_FRAMEWORK = {
@@ -187,7 +189,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "شباب بحري",
     "welcome_sign": "أهلاً بك في لوحة تحكم شباب بحري",
     "copyright": "جميع الحقوق محفوظة شباب بحري - Bahary Youth",
-    "site_logo": "bahary_admin/images/logo.jpg",
+    "site_logo": "bahary_admin/images/logo B3 png.png",
     "show_sidebar": True,
     "navigation_expanded": True,
     "user_avatar": "image",
@@ -201,7 +203,11 @@ JAZZMIN_SETTINGS = {
         "news.News": "fas fa-newspaper",
         "news.NewsImage": "fas fa-image",
         "events.Event": "fas fa-calendar-alt",
-        "admin.LogEntry": "fas fa-history"
+        "admin.LogEntry": "fas fa-history",
+        "events.Category": "fa-solid fa-list",
+        "activities.Activities": "fa-solid fa-icons",
+        "registrations.RegisterationEvents":"fa-solid fa-address-card",
+        "registrations.RegisterationActivities":"fa-solid fa-address-card",
     },
 }
 

@@ -7,7 +7,10 @@ class GovernorateSerializers(serializers.ModelSerializer):
     class Meta:
         model = Governorate
         fields = [
-            'name',
+            'name_ar',
+            'name_en',
+            'address_ar',
+            'address_en',
             'location_link',
             'latitude',
             'longitude',

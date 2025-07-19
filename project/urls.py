@@ -32,6 +32,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home,name='home'),
+   path('', home,name='home'),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
@@ -39,6 +40,8 @@ urlpatterns = [
     path('api/',include('accounts.urls')),
     path('api/',include('news.urls')),
     path('api/',include('events.urls')),
+    path('api/',include('activities.urls')),
+    path('api/',include('registrations.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=os.path.join(BASE_DIR, "bahary_admin", "static"))

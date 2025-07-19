@@ -33,6 +33,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(max_length=50, choices=ROLE_CHOICES, verbose_name="الدور")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    id_number = models.CharField(max_length=14,verbose_name='الرقم القومي')
+    id_front = CloudinaryField(blank=True, null=True,verbose_name="صورة بطاقة الرقم القومي من الامام")
+    id_back = CloudinaryField(blank=True, null=True,verbose_name="صورة بطاقة الرقم القومي من الخلف")
 
     central_unit = models.ForeignKey(CentralUnit, null=True, blank=True, on_delete=models.SET_NULL, related_name='centeralunit',verbose_name="الوحدة المركزية")
     governorate = models.ForeignKey(Governorate, null=True, blank=True, on_delete=models.SET_NULL, related_name='governrate',verbose_name="المحافظة")

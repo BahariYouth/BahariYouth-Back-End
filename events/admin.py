@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Event
+from .models import Event,Category
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['title', 'governorate', 'date', 'created_by']
-    readonly_fields = ['created_by', 'updated_by','updated_at','created_at','date']
+    list_display = ['title_ar', 'governorate', 'date', 'created_by']
+    readonly_fields = ['created_by', 'updated_by','updated_at','created_at']
     
     fieldsets = (
-        ('عام', {'fields': ('title', 'description','image','date','governorate')}),
+        ('عام', {'fields': ('title_ar','title_en' ,'description_ar','description_en','category','tickets','address_ar','address_en','image','date','governorate')}),
         ('معلومات', {
             'fields': (
                 'created_at',
@@ -22,6 +22,8 @@ class EventAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         if request.user.role == 'central_unit_head' and request.user.central_unit.name == 'وحدة التنظيم المركزي':
+            return qs
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
             return qs
         return qs.filter(created_by=request.user)
 
@@ -86,3 +88,4 @@ class EventAdmin(admin.ModelAdmin):
         return super().has_add_permission(request)
 
 admin.site.register(Event, EventAdmin)
+admin.site.register(Category)

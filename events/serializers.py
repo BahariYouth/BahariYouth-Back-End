@@ -12,10 +12,14 @@ class EventsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [
-            'title',
-            'description',
+            'title_ar',
+            'title_en',
+            'description_ar',
+            'description_en',
             'date',
             'image',
+            'category',
+            'tickets',
             'governorate',
             'created_by',
             'updated_by',

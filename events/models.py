@@ -3,13 +3,51 @@ from django.conf import settings
 from structure.models import Governorate
 from cloudinary.models import CloudinaryField
 
-class Event(models.Model):
-    title = models.CharField(
+
+
+
+
+class Category(models.Model):
+    name = models.CharField(
         max_length=255,
-        verbose_name='العنوان'
+        verbose_name='الفئات'
     )
-    description = models.TextField(
-        verbose_name="الوصف"
+    
+    class Meta:
+        verbose_name = 'فئة'
+        verbose_name_plural = 'فئات'
+    
+    def __str__(self):
+        return self.name
+        
+
+class Event(models.Model):
+    STATUS_CHOICES = [
+        ('online', 'Online'),
+        ('offline', 'Offline'),
+    ]
+
+    title_ar = models.CharField(
+        max_length=255,
+        verbose_name='العنوان بالعربي'
+    )
+    title_en = models.CharField(
+        max_length=255,
+        verbose_name='العنوان بالإنجليزي'
+    )
+    description_ar = models.TextField(
+        verbose_name="الوصف بالعربي"
+    )
+    description_en = models.TextField(
+        verbose_name="الوصف بالإنجليزي"
+    )
+    address_ar = models.CharField(
+        max_length=255,
+        verbose_name="عنوان الفعالية بالعربي"
+    )
+    address_en = models.CharField(
+        max_length=255,
+        verbose_name="عنوان الفعالية بالإنجليزي"
     )
     date = models.DateTimeField(
         verbose_name="تاريخ الفعالية"
@@ -23,6 +61,18 @@ class Event(models.Model):
         Governorate,
         on_delete=models.CASCADE,
         verbose_name='المحافظة'
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        verbose_name='الفئات'
+    )
+    is_private = models.BooleanField(default=False, verbose_name='طريقة التواصل')
+    status = models.CharField(
+        max_length=15,
+        choices=STATUS_CHOICES,
+        default='offline',
+        verbose_name='حالة الفعالية'
     )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -46,9 +96,12 @@ class Event(models.Model):
         auto_now=True,
         verbose_name='آخر تعديل'
     )
+    tickets = models.IntegerField(
+        verbose_name='عدد الأماكن'
+    )
 
     def __str__(self):
-        return self.title
+        return self.title_ar
 
     class Meta:
         verbose_name = "فعالية"

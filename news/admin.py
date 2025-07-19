@@ -32,11 +32,11 @@ class NewsImageInline(admin.StackedInline):
     
 class NewsAdmin(admin.ModelAdmin):
     inlines = [NewsImageInline]
-    list_display = ['title', 'governorate', 'date', 'created_by']
+    list_display = ['title_ar', 'governorate', 'date', 'created_by']
     readonly_fields = ['created_by', 'updated_by','updated_at','created_at','date']
     
     fieldsets = (
-        ('عام', {'fields': ('title', 'description','date','governorate')}),
+        ('عام', {'fields': ('title_ar','title_en' ,'description_ar','description_en','category','date','governorate')}),
         ('معلومات', {
             'fields': (
                 'created_at',
@@ -60,6 +60,8 @@ class NewsAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         if request.user.role == 'central_unit_head' and request.user.central_unit and request.user.central_unit.name == 'المركز الاعلامي':
+            return qs
+        if request.user.role == 'unit_member' and request.user.central_unit and request.user.central_unit.name == 'لجنة البرمجة':
             return qs
         return qs.filter(created_by=request.user)
 

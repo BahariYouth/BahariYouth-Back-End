@@ -48,7 +48,10 @@ class CustomUserAdmin(BaseUserAdmin):
                 'governorate',
                 'central_unit',
                 'image',
-                'display_image'
+                'display_image',
+                'id_number',
+                'id_front',
+                'id_back',
             )
         }),
         ('الصلاحيات', {

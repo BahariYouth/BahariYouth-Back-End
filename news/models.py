@@ -1,15 +1,23 @@
 from django.db import models
 from django.conf import settings
 from structure.models import Governorate
+from events.models import Category
 from cloudinary.models import CloudinaryField
 
 class News(models.Model):
-    title = models.CharField(
+    title_ar = models.CharField(
         max_length=255,
-        verbose_name="العنوان"
+        verbose_name="العنوان بالعربي"
     )
-    description = models.TextField(
-        verbose_name="الوصف"
+    title_en = models.CharField(
+        max_length=255,
+        verbose_name="العنوان بالإنجليزي"
+    )
+    description_ar = models.TextField(
+        verbose_name="الوصف بالعربي"
+    )
+    description_en = models.TextField(
+        verbose_name="الوصف بالإنجليزي"
     )
     date = models.DateTimeField(
         auto_now=True,
@@ -19,6 +27,10 @@ class News(models.Model):
         'structure.Governorate',
         on_delete=models.CASCADE,
         verbose_name="المحافظة"
+    )
+    category = models.ManyToManyField(
+        'events.Category',
+        verbose_name='الفئات',
     )
     created_by = models.ForeignKey(
         'accounts.User',
@@ -48,7 +60,8 @@ class News(models.Model):
         verbose_name_plural = "الأخبار"
 
     def __str__(self):
-        return self.title
+        return self.title_ar
+
 
 
 class NewsImage(models.Model):
@@ -59,11 +72,11 @@ class NewsImage(models.Model):
         verbose_name="الخبر"
     )
     image = CloudinaryField(
-        verbose_name="صورة"
+        verbose_name="صورة الخبر"
     )
 
     def __str__(self):
-        return f"صورة لـ {self.news.title}"
+        return f"صورة لـ {self.news.title_ar}"
 
     class Meta:
         verbose_name = "صورة الخبر"
