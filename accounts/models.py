@@ -25,12 +25,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('governorate_head', 'منسق محافظة'),
         ('governorate_vice', 'نائب منسق محافظة'),
         ('unit_member', 'عضو وحدة'),
+        ('user', 'مستخدم'),
     ]
 
     email = models.EmailField(unique=True, verbose_name="البريد الإلكتروني")
     full_name = models.CharField(max_length=255, verbose_name="الاسم الكامل")
     image = CloudinaryField(blank=True, null=True,verbose_name="الصورة")
-    role = models.CharField(max_length=50, choices=ROLE_CHOICES, verbose_name="الدور")
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='مستخدم' ,verbose_name="الدور")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     id_number = models.CharField(max_length=14,blank=True,null=True,verbose_name='الرقم القومي')
