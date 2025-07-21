@@ -8,9 +8,13 @@ from cloudinary.models import CloudinaryField
 
 
 class Category(models.Model):
-    name = models.CharField(
+    name_ar = models.CharField(
         max_length=255,
-        verbose_name='الفئات'
+        verbose_name='الفئة بالعربي'
+    )
+    name_en = models.CharField(
+        max_length=255,
+        verbose_name='الفئات بالانجليزي'
     )
     
     class Meta:

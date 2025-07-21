@@ -20,14 +20,14 @@ class EventRegistrationViewSet(BahariYouthViewset):
         user = request.user
         event_id = request.data.get('event')
 
-        # Handle ID upload
+
         id_number = request.data.get('id_number')
         id_front = request.FILES.get('id_front')
         id_back = request.FILES.get('id_back')
 
         validate_user_data(user, id_number, id_front, id_back)
-
-        registration, created = RegisterationEvents.objects.get_or_create(event=event_id)
+        evnet = get_object_or_404(Event,id=event_id)
+        registration, created = RegisterationEvents.objects.get_or_create(event=evnet)
         if registration.user.filter(id=user.id).exists():
             return Response({
                 'status': 'error',
@@ -38,8 +38,8 @@ class EventRegistrationViewSet(BahariYouthViewset):
             }, status=status.HTTP_400_BAD_REQUEST)
             
             
-        evnet = get_object_or_404(Event,id=event_id)
-        if registration.user.count() < evnet.quantity :
+        
+        if registration.user.count() < evnet.tickets :
             registration.user.add(user)
         else:
             return Response({
@@ -70,7 +70,6 @@ class ActivitiesRegistrationViewSet(BahariYouthViewset):
         user = request.user
         activity_id = request.data.get('activity')
 
-        # Handle ID upload
         id_number = request.data.get('id_number')
         id_front = request.FILES.get('id_front')
         id_back = request.FILES.get('id_back')
