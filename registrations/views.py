@@ -76,7 +76,8 @@ class ActivitiesRegistrationViewSet(BahariYouthViewset):
         id_back = request.FILES.get('id_back')
 
         validate_user_data(user, id_number, id_front, id_back)
-        registration, created = RegisterationActivities.objects.get_or_create(activities=activity_id)
+        activity = get_object_or_404(Activities, id=activity_id)
+        registration, created = RegisterationActivities.objects.get_or_create(activities=activity)
         if registration.user.filter(id=user.id).exists():
             return Response({
                 'status': 'error',
@@ -87,7 +88,7 @@ class ActivitiesRegistrationViewSet(BahariYouthViewset):
             }, status=status.HTTP_400_BAD_REQUEST)
             
             
-        activity = get_object_or_404(Activities, id=activity_id)
+        
         if registration.user.count() < activity.quantity :
             registration.user.add(user)
         else:
