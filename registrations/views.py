@@ -89,7 +89,7 @@ class ActivitiesRegistrationViewSet(BahariYouthViewset):
             
             
         
-        if registration.user.count() < activity.quantity :
+        if registration.user.count() < activity.tickets :
             registration.user.add(user)
         else:
             return Response({
