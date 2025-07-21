@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Event,Category
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['title_ar', 'governorate', 'date', 'created_by']
+    list_display = ['title_ar','title_en',"address_ar",'address_en', 'governorate', 'date', 'created_by']
     readonly_fields = ['created_by', 'updated_by','updated_at','created_at']
     
     fieldsets = (

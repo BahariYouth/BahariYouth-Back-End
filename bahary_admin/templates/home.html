@@ -244,17 +244,28 @@
             margin-right: auto;
         }
 
+       /* Add this to your existing <style> block */
+
+    .hero p .highlight-text {
+        display: block; /* Make it a block-level element to allow text-align */
+        text-align: center; /* Center the text */
+        color: var(--primary-blue); /* Apply the primary blue color */
+        font-weight: 700; /* Make it bold for emphasis */
+        margin-top: 10px; /* Add some space above it if needed */
+        font-size: 1.3rem; /* Make it slightly larger for prominence */
+        }
+
         .hero .hero-image {
            width: 100%;
-            max-width: 657px;
-            height: 257px;
-            background: url(/static/bahary_admin/images/hero.jpg) center center / cover no-repeat;
-            border-radius: var(--border-radius-medium);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            animation: fadeInScale 1.2s ease-out forwards;
-            animation-delay: 0.4s;
-            opacity: 0;
+           max-width: 657px;
+           height: 257px;
+           background: url({% static 'bahary_admin/images/hero.jpg' %}) center center / cover no-repeat;
+           border-radius: var(--border-radius-medium);
+           box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+           overflow: hidden;
+           animation: fadeInScale 1.2s ease-out forwards;
+           animation-delay: 0.4s;
+           opacity: 0;
         }
 
         /* --- Sections (Card-based) --- */
@@ -307,6 +318,43 @@
             max-width: 800px;
             margin: 0 auto;
         }
+
+        /* --- Mobile App Section Specific Styles --- */
+        #mobile-app .app-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .gradient-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: var(--border-radius-medium);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-blue), #0056b3); /* Blue gradient */
+            box-shadow: 0 8px 20px rgba(0, 71, 171, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            min-width: 200px; /* Ensure buttons have a minimum width */
+            justify-content: center;
+        }
+
+        .gradient-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 71, 171, 0.4);
+            background: linear-gradient(135deg, #0056b3, var(--primary-blue)); /* Slightly change gradient on hover */
+        }
+
+        .gradient-button i {
+            font-size: 1.5rem; /* Icon size within button */
+        }
+
 
         /* --- Footer --- */
         footer {
@@ -424,6 +472,10 @@
             nav .admin-btn {
                 display: none; /* Hide admin button from main nav on mobile, optionally move it to menu */
             }
+            .mobile-only-btn {
+                display: block; /* Show the login button inside the mobile menu */
+            }
+
 
             /* Adjustments for hero section when nav height changes */
             .hero-wrapper {
@@ -456,8 +508,6 @@
                 width: 90%;
                 max-width: 300px;
                 height: 128px;
-    
-}
             }
             .section-card {
                 padding: 30px;
@@ -466,6 +516,16 @@
             section h2 {
                 font-size: 2.2rem;
                 margin-bottom: 30px;
+            }
+
+            /* Mobile app button responsive */
+            #mobile-app .app-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .gradient-button {
+                width: 100%;
+                max-width: 280px; /* Constrain width of buttons */
             }
         }
 
@@ -514,6 +574,7 @@
                 <li><a href="#home">الرئيسية</a></li>
                 <li><a href="#about">من نحن</a></li>
                 <li><a href="#contact">تواصل معنا</a></li>
+                <li><a href="#mobile-app">تطبيقنا</a></li> {# Added link to new section #}
                 <li class="mobile-only-btn"><a href="/admin/">تسجيل الدخول</a></li>
             </ul>
         </div>
@@ -525,9 +586,10 @@
                 <div class="hero-image">
                 </div>
                 <div class="text-content">
-                    <h1>أهلاً بك في <br> مبادرة شباب بحري</h1>
+                    <h1>أهلاً بك في <br> شباب بحري</h1>
                     <p>
-                        شباب بحري هي مبادرة رائدة لتمكين الشباب وتطوير قدراتهم القيادية والمجتمعية، تعمل تحت إشراف وزارة الشباب والرياضة. نهدف إلى بناء جيل واعٍ ومبتكر قادر على قيادة المستقبل.
+                       كيان شبابي، تابع لـ وزارة الشباب والرياضة - يهدف إلى توفيـر بيئة عمل وطنية شبابية، لتطوير وبناء كادر شبابي قادر على المشاركة في البناء ودفع عجلة التنمية، التي تتطور يوم بعد يوم، في رسالة واضحة بأن
+                       <br> <span class="highlight-text">#القوة_بالشباب</span>.
                     </p>
                 </div>
             </div>
@@ -537,9 +599,8 @@
     <section id="about" class="container section-card">
         <h2>من نحن</h2>
         <p>
-            شباب بحري هي مبادرة شبابية رائدة تحت رعاية وزارة الشباب والرياضة، تأسست بهدف أساسي يتمثل في تمكين وتطوير القدرات الكامنة لدى الشباب المصري في مختلف المجالات الحيوية. نحن نؤمن بأن الشباب هم عماد المستقبل، ولذا نسعى جاهدين لتوفير بيئة داعمة ومحفزة تتيح لهم الابتكار، التعلم، والمساهمة الفاعلة في مجتمعاتهم.
-            <br><br>
-            نعمل من خلال مجموعة متنوعة من الفعاليات، الأنشطة المجتمعية، وورش العمل التدريبية المتخصصة التي تغطي جوانب متعددة مثل التنمية الذاتية، المهارات القيادية، الريادة المجتمعية، والوعي الثقافي. هدفنا هو بناء جيل من الشباب الواعي، القادر على تحمل المسؤولية، والمؤهل لقيادة مسيرة التنمية والازدهار في مصر.
+            احنا كيان شباب بحري، أحد الكيانات الشبابية التابعة لوزارة الشباب والرياضة 🇪🇬
+الكيان ليه رؤية واضحة وهى توسيع قاعدة المشاركة الشبابية الفعالة في المجتمع، من خلال توفيـر بيئة عمل وطنية شبابية، لتطوير وبناء كادر شبابي قادر على المشاركة في البناء ودفع عجلة التنمية، التي تتطور يوم بعد يوم، في رسالة واضحة بأن #القوة_بالشباب، ومن أهدافنا دعم وتنفيذ الخطط التنموية والمجتمعية، وإرساء قواعد العمل التطوعي من خلال إتاحة الفرص للشباب لتعزيز مهارتهم وبناء قدراتهم. 
         </p>
     </section>
 
@@ -549,6 +610,27 @@
             نحن متحمسون للتواصل معكم! سواء كانت لديكم استفسارات، اقتراحات، أو ترغبون في الانضمام إلى مبادرتنا، لا تترددوا في التواصل معنا عبر قنواتنا الرسمية. تابعوا صفحتنا على فيسبوك للحصول على آخر الأخبار والفعاليات، أو راسلونا مباشرة عبر البريد الإلكتروني. فريقنا مستعد دائماً للاستماع وتقديم الدعم.
         </p>
     </section>
+
+    ---
+
+    <section id="mobile-app" class="container section-card">
+        <h2>تطبيقنا متاح الآن! 📱</h2>
+        <p>
+            لتجربة أفضل ومتابعة أحدث الأنشطة والفعاليات بسهولة، يمكنك الآن تحميل تطبيق "شباب بحري" على هاتفك الذكي. ابقَ على اطلاع دائم بجميع برامجنا وورش العمل، وتفاعل مع مجتمع الشباب من خلال التطبيق.
+        </p>
+        <div class="app-links">
+            <a href="#" class="gradient-button" aria-label="تحميل من متجر جوجل بلاي">
+                <i class="fab fa-google-play"></i>
+                <span>Google Play</span>
+            </a>
+            <a href="#" class="gradient-button" aria-label="تحميل من متجر آبل">
+                <i class="fab fa-apple"></i>
+                <span>App Store</span>
+            </a>
+        </div>
+    </section>
+
+    ---
 
     <footer>
         <div class="container">
@@ -566,7 +648,7 @@
                     <i class="fa-brands fa-instagram"></i>
                 </a>
                 <a href="https://x.com/BaharyYouth" aria-label="راسلنا عبر البريد الإلكتروني">
-                    <i class="fa-solid fa-x""></i>
+                    <i class="fa-solid fa-x"></i>
                 </a>
             </div>
         </div>

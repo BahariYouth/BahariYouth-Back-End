@@ -32,7 +32,7 @@ class NewsImageInline(admin.StackedInline):
     
 class NewsAdmin(admin.ModelAdmin):
     inlines = [NewsImageInline]
-    list_display = ['title_ar', 'governorate', 'date', 'created_by']
+    list_display = ['title_ar','title_en',   'governorate', 'date', 'created_by']
     readonly_fields = ['created_by', 'updated_by','updated_at','created_at','date']
     
     fieldsets = (
